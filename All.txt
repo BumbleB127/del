@@ -1,0 +1,192 @@
+1.
+
+<html>
+<head>
+<title> String Replacement Form </title>
+</head>
+<body>
+<h2> String Replacement Form </h2>
+<form method="post">
+<?php
+	if($_SERVER["REQUEST_METHOD"]=="POST")
+	{
+		$original=$_POST["original_string"];
+		$search=$_POST["search_string"];
+		$replace=$_POST["replace_string"];
+		echo"<h3>Result : </h3> ;
+		Original String : $original <br>
+		String to replace : $search <br>
+		Replacement String : $replace <br>
+		Result String : ".str_replace($search,$replace,$original);
+	}
+?>
+
+Original String : <input type="text" name="original_string" required><br><br>
+String to replace : <input type="text" name="search_string" required><br><br>
+Replacement String : <input type="text" name="replace_string" required><br><br>
+<input type="submit" name="submit" value="Replace">
+</form>
+</body>
+</html>
+
+2.
+
+<html>
+<body>
+<?php
+	$myXMLData="<?xml version='1.0' encoding='UTF-8'?>
+	<note>
+	<to> Tove </to>
+	<from> Jani </from>
+	<heading> Remainder </heading>
+	<body> Dont forget me , this weekend ! </body>
+	</note>";
+	$xml=Simplexml_load_String($myXMLData) or die("Error:Cannot create object");
+	print_r($xml);
+?>
+</body>
+</html>
+
+3. 
+
+<html>
+<head>
+<title>Email Registration</title>
+</head>
+<body>
+<center>
+<h2> Email Registration </h2>
+<form method="post" action="p3t1.php">
+<br>
+Sign up <br><br>
+sname:<input type="text" name="sname" required><br><br>
+email:<input type="text" name="email" required><br><br>
+<input type="submit" value="submit">
+</form>
+</center>
+</html>
+
+<?php
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+$u=$_POST["sname"];
+$p=$_POST["email"];
+$conn=mysqli_connect("localhost","root","","college123");
+$sql="INSERT INTO deptcs(sname,email) values ('$u','$p')";
+$r=mysqli_query($conn,$sql);
+if($r)
+{
+echo "S";
+}
+else
+{
+echo "no";
+}
+}
+?>
+
+4.
+
+<html>
+<head>
+<title> Student Marks Card </title>
+<style>
+table{
+width:50%;
+border-collapse:collapse;
+margin:20px;
+}
+th,td{
+border:1px solid #ddd;
+padding:8px;
+text-align:left;
+}
+th{
+background-color:#f2f2f2;
+}
+</style>
+</head>
+<?php
+$serverrname="localhost";
+$username="root";
+$password="";
+$dbname="student";
+$conn=new mysqli($serverrname,$username,$password,$dbname);
+if($conn->connect_error){
+die("connection failed: ".$con->connect_error);
+}
+$sql="select *from student_mark";
+$result=$conn->query($sql);
+if($result->num_rows>0){
+echo "<table>";
+echo "<tr><th>Roll number</th><th>Name</th><th>Student</th><th>Marks</th></tr>";
+while($row=$result->fetch_assoc()){
+echo "<tr>";
+echo "<td>".$row["roll_number"]."</td>";
+echo "<td>".$row["name"]."</td>";
+echo "<td>".$row["subject"]."</td>";
+echo "<td>".$row["marks"]."</td>";
+echo "</tr>";
+}
+echo "</table>";
+} else {
+echo " no record";
+}
+$conn->close();
+?>
+</body>
+</html>
+
+5.
+
+<html>
+<head>
+<title>Login System in PHP</title>
+</head>
+<body>
+<h3>Write a PHP program to give authentication for registered users with Database (Login System)</h3>
+<form action="" method="POST">
+<label>Username</label><br>
+<input type="text" name="username"><br>
+<label>Password</label><br>
+<input type="password" name="password"><br>
+<input type="submit" name="submit">
+</form>
+<?php
+        $connection = mysqli_connect("localhost","root","");
+        $db = mysqli_select_db($connection,'college123');
+        if(isset($_POST['submit']))
+        {
+        $name = $_POST['username'];
+        $pswd = $_POST['password'];
+         $query = mysqli_query($connection,"SELECT username,password FROM userTable WHERE username='$name' and password='$pswd'");
+         if($query)
+            {
+                if(mysqli_num_rows($query) > 0)//returns rows of data from table
+                    echo 'Login Success';
+                else
+                    echo 'Login failed';
+            }
+        }
+    ?>
+</body>
+</html>
+
+10. 
+
+<?php
+	$rand=rand();
+	$now=time();
+	$next=strtotime(date("H:i",strtotime("+1 minute")));
+	$diff=$next-$now;
+	if(!$_COOKIE["random"])
+	{
+		setcookie("random",$rand,time()+$diff);
+	}
+	else
+	{
+		 $rand=$_COOKIE["random"];
+
+	}
+	echo $rand;
+?>
